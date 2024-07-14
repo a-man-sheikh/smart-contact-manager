@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/base::layout(~{::section})">
+<head>
+	<meta charset="UTF-8" />
+	<title >about page</title>
+</head>
+<body>
+	<section class="content">
+		<div class="card ">
+			<div class="card-body">
+				<div class="container  text-center">
+
+					<img class="detail-image" th:src="@{'/img/'+${contact.image}}" alt="profile photo"/>
+					<h3><span th:text="${contact.name} "></span><span th:text="${'('+contact.nickname+')'}"></span></h3>
+
+
+					<table class="table">
+						<thead>
+						  <tr>
+							<th scope="col">#ID</th>
+							<th scope="col">SCMUSER<span th:text="${contact.cid}"></span></th>
+							
+						  </tr>
+						</thead>
+						<tbody>
+						  <tr>
+							<th scope="row">Email</th>
+							<td><span th:text="${contact.email}"></span></td>
+							
+						  </tr>
+						  <tr>
+							<th scope="row">Phone</th>
+							<td><span th:text="${contact.phone}"></span></td>
+							
+						  </tr>
+						  <tr>
+							<th scope="row">Work</th>
+							<td><span th:text="${contact.work}"></span></td>
+						
+						  </tr>
+						</tbody>
+					  </table>
+					  <div>
+						<th:block th:utext="${contact.description}"></th:block>
+					  </div>
+					  <button class="btn btn-danger btn-sm" >Delete<i class="ri-delete-bin-6-line"></i></button>
+					  <button class="btn btn-primary btn-sm">Update<i class="ri-pencil-line"></i></button>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

@@ -1,0 +1,31 @@
+body{
+	backgorund:#e2e2e2!important;
+}
+.banner{
+	width:100%;
+	height:92vh;
+
+	    background-size: cover; /* This ensures the image covers the whole banner */
+    background-position: center; /* This centers the image within the banner */
+    background-repeat: no-repeat;;
+}
+.my-card{
+	padding:20px;
+	background:#ffffff;
+}
+textarea{
+	resize:none;
+}
+.profile-image{
+
+	width: 35px;
+	height: 35px;
+	margin-right: 5px;
+	border-radius: 50%;
+}
+.detail-image{
+	height: 220px;
+	width: 200px;
+	border-radius: 50%;
+}
+
