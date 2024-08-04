@@ -43,8 +43,8 @@
 					  <div>
 						<th:block th:utext="${contact.description}"></th:block>
 					  </div>
-					  <button class="btn btn-danger btn-sm" >Delete<i class="ri-delete-bin-6-line"></i></button>
-					  <button class="btn btn-primary btn-sm">Update<i class="ri-pencil-line"></i></button>
+					        <a th:href="@{'/user/delete/'+${contact.cid}}" class="btn btn-danger btn-sm" >Delete<i class="ri-delete-bin-6-line"></i></a>
+       <a th:href="@{'/user/update/'+${contact.cid}}" class="btn btn-primary btn-sm">Update<i class="ri-pencil-line"></i></a>
 				</div>
 			</div>
 		</div>

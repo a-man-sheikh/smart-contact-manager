@@ -45,7 +45,7 @@ public class MyConfig {
 	                .requestMatchers("/user/**").hasRole("USER")
 	                .anyRequest().permitAll()
 	            )
-	            .formLogin(form -> form.loginPage("/signin").loginProcessingUrl("/dologin").defaultSuccessUrl("/user/index")
+	            .formLogin(form -> form.loginPage("/signin").loginProcessingUrl("/dologin").defaultSuccessUrl("/user/index") 
 	                .permitAll()
 	            ) .logout(logout -> logout
 	                    .permitAll()

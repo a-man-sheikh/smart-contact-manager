@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/base::layout(~{::section})">
+<head>
+	<meta charset="UTF-8" />
+	<title >about page</title>
+</head>
+<body>
+	<section class="content">
+	<div th:if="${session.message}" th:classappend="${session.message.type}" class="alert text-center " role="alert">
+  <p th:text="${session.message.content}"></p>
+   <th:block th:text="${@sessionHelper.removeMessageFromSession()}"></th:block>
+</div>
+	<div class="card">
+	<div class="card-body">
+    <h1 class="text-center">Update Contact</h1>
+    </div>
+    <div class="container-fluid mt-1">
+    <div class="row">
+    
+    <div class="col-md-10 offset-md-1">
+    
+    
+    <form th:each="c : ${contact}" action="#" th:object="${contact}" enctype="multipart/form-data" method="post" th:action="@{'/user/update-contact/'+${c.cid}}" class="mt-2">
+   <!--  Name -->
+    
+   <div class="input-group"><div class="input-group-prepend"><div class="input-group-text mr-3"><i class="ri-user-line"></i></div>
+   
+ 
+   
+  </div>
+   
+   <input type="text" id="firstName" name="name" placeholder="Enter Name here" class="form-control required" th:value="${c.name}"/>
+   
+   
+   
+   </div>
+   
+   
+   
+   <!-- NickName -->
+   
+   <div class="input-group mt-3"><div class="input-group-prepend"><div class="input-group-text mr-3"><i class="ri-user-2-line"></i></div>
+   
+ 
+   
+  </div>
+   
+   <input type="text" id="secondName" name="nickname" placeholder="Enter Nickname here" class="form-control required"/>
+   
+   
+   
+   </div>
+    
+    
+    <!-- phone -->
+    
+    <div class="input-group mt-3"><div class="input-group-prepend"><div class="input-group-text mr-3"><i class="ri-phone-line"></i></div>
+   
+ 
+   
+  </div>
+   
+   <input type="number" id="phone" name="phone" placeholder="Enter Phone number here" class="form-control required min=10"/>
+   
+   
+   
+   </div>
+   
+   
+   <!-- email -->
+   
+   
+   <div class="input-group mt-3"><div class="input-group-prepend"><div class="input-group-text mr-3"><i class="ri-mail-line"></i></div>
+   
+ 
+   
+  </div>
+   
+   <input type="email" id="email" name="email" placeholder="Enter Email here" class="form-control" required/>
+   
+   
+   
+   </div>
+   <!-- work -->
+   
+   <div class="input-group mt-3"><div class="input-group-prepend"><div class="input-group-text mr-3"><i class="ri-briefcase-line"></i></div>
+   
+ 
+   
+  </div>
+   
+   <input type="text" id="work" name="work" placeholder="Enter work here" class="form-control" required/>
+   
+   
+   
+   </div>
+   
+  <!--  Contact Description -->
+  <div class="form-group mt-3">
+  
+  <textarea name="description" id="description" class="form-control"  rows="20" placeholder="Enter Contact Description"></textarea>
+  
+  
+  </div>
+  
+   <input type="file"  name="myimage"  class="form-control mt-3"/>
+   
+   
+ 
+  <div class="conatiner text-center mt-3">
+  <button type="submit" class="btn btn-outline-primary">update Contact</button>
+   
+  
+  </div>
+    
+    
+    </form>
+    
+    
+    
+    
+    </div>
+    
+    
+    
+    </div>
+    
+    
+    
+    </div>
+	
+	
+	
+
+	
+	
+	
+	</div>
+<script src="https://cdn.tiny.cloud/1/4e2bax6fe39t3db1umr49inn1lwp81dlx4lyk4hl633clxeu/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+
+	<script>
+      tinymce.init({
+        selector: '#description'
+      });
+    </script>
+	
+	</section>
+</body>
+</html>

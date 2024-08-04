@@ -123,12 +123,129 @@ ContactRepository contactRepository;
 		  return "normal/show_contacts";
 		  
 	  }
-	  @GetMapping("/{cid}/show-details")
-	  public String showDetails(@PathVariable("cid") Integer cid,Model model) {
+	  @GetMapping("/error")
+	  public String error(){
+		  return "normal/error-page";
 		  
-		 Contact contact= this.contactRepository.getReferenceById(cid);
-		 model.addAttribute("contact",contact);
+	  }
+	  @GetMapping("/{cid}/show-details")
+	  public String showDetails(@PathVariable("cid") Integer cid,Model model,Principal principal) {
+		  String userName = principal.getName();
+	 User user = this.userRepository.getUserByUserName(userName);
+	 Contact contact= this.contactRepository.getReferenceById(cid);
+	 try {
+
+		 if(user.getId()==contact.getUser().getId()) {
+			 model.addAttribute("contact",contact);
+		 }
+		 else {
+			 return "redirect:/user/error";
+		 }
+		 
+	 }
+	 catch(Exception e) {
+		 return "redirect:/user/error";
+	 }
+		
 		  return "normal/show_details";
 	  }
-	  
+	  @GetMapping("/delete/{cid}")
+	  public String delete(@PathVariable("cid") Integer cid,Principal principal,HttpSession session){
+		  String userName = principal.getName();
+			 User user = this.userRepository.getUserByUserName(userName);
+		  Contact contact = this.contactRepository.getReferenceById(cid);
+		 
+		  try {
+
+				 if(user.getId()==contact.getUser().getId()) {
+					 this.contactRepository.delete(contact);
+					 session.setAttribute("message", new Message("Contact deleted succesfully..","success"));
+				
+				 }
+				 else {
+					 return "redirect:/user/error";
+				 }
+				 
+			 }
+			 catch(Exception e) {
+				 return "redirect:/user/error";
+			 }
+				
+		  
+			 return "redirect:/user/show-contacts/0";
+		  
+	  }
+	  @GetMapping("/update/{cid}")
+	  public String update(@PathVariable("cid") Integer cid,Principal principal,Model model) {
+		  String userName = principal.getName();
+			 User user = this.userRepository.getUserByUserName(userName);
+			 Contact contact= this.contactRepository.getReferenceById(cid);
+			 try {
+
+				 if(user.getId()==contact.getUser().getId()) {
+					 model.addAttribute("contact",contact);
+				 }
+				 else {
+					 return "redirect:/user/error";
+				 }
+				 
+			 }
+			 catch(Exception e) {
+				 return "redirect:/user/error";
+			 }
+		  return "normal/update_form";
+		  
+	  }
+	  @PostMapping("/update-contact/{cid}")
+	    public String updateontact(@PathVariable("cid") Integer cid,
+	           @ModelAttribute Contact contact,
+	         
+	            @RequestParam("myimage") MultipartFile file,
+	            
+	            Principal principal,HttpSession session) {
+
+	    
+
+	        try {
+	            String username = principal.getName();
+	            User user = userRepository.getUserByUserName(username);
+	            user.getContacts().add(contact);
+	            contact.setUser(user);
+
+	            if (!file.isEmpty()) {
+	                // Get the file and set the image field in the contact entity
+	                contact.setImage(file.getOriginalFilename());
+
+	                // Save the file to the specified location
+	                File saveFile = new ClassPathResource("static/img").getFile();
+	                Path path = Paths.get(saveFile.getAbsolutePath()+File.separator+file.getOriginalFilename());
+	                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+	            }
+				else{
+					contact.setImage("contact.png");
+				}
+
+	         
+	            userRepository.save(user);
+	            session.setAttribute("message", new Message("Your contact is updated !! Add more ..","alert-success"));
+				
+		
+	
+
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        	session.setAttribute("message", new Message("Something went wrong !! Try again .."+e.getMessage(),"alert-danger"));
+				
+	         
+	            return "normal/addcontact";
+	        }
+
+	        return "redirect:/user/show-contacts/0";
+	    }
+	  //your  profile handler
+	  @GetMapping("/profile")
+	  public String yourProfile(Model model) {
+		  model.addAttribute("title","Smart Contact Manager - Profile ");
+		  return "normal/profile";
+	  }
 }
